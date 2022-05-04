@@ -1,11 +1,17 @@
 package com.mahendra.demo1;
 
+import java.io.Serializable;
+
+//Annotation is part of JAXB
+import javax.xml.bind.annotation.XmlRootElement;
+
 // POJO / Plain Old Java Object
 // 1. Class must be PUBLIC and in "TitleCase"
 // 2. All attributes must be PRIVATE and have Getters and Setters
 // 3. Members (excluding STATIC) name must be in "camelCase"
 // 4. A Public NO-ARG constructor
-public class Customer {
+@XmlRootElement
+public class Customer implements Serializable {
 
 	private int custId;
 	
