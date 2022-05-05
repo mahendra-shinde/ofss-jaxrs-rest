@@ -37,6 +37,22 @@ public class HomeLoanService {
 		loans.remove(loan);
 	}
 	
+	//// FOR PUT
+	public void update(HomeLoan loan) {
+		HomeLoan loanRef = findByAccNum(loan.getAccountNumber());
+		// replace the old values with new
+		loanRef.setCustomerName(loan.getCustomerName());
+		loanRef.setDisbursedAmount(loan.getDisbursedAmount());
+		loanRef.setRateOfInterest(loan.getRateOfInterest());
+	}
+	
+	/// FOR Patch
+	public void updateInterest(String accNo, double newRate) {
+		HomeLoan loanRef = findByAccNum(accNo);
+		loanRef.setRateOfInterest(newRate);
+	}
+	
+	
 	private boolean loanExists(String accNum) {
 		for(HomeLoan loan : loans) {
 			if(loan.getAccountNumber().equalsIgnoreCase(accNum)) {
