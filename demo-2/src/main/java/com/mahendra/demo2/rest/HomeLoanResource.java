@@ -46,25 +46,25 @@ public class HomeLoanResource {
 			return Response.status(404, ex.getMessage()).build();
 		}
 	}
-	
+
 	@PUT
 	@Consumes("application/json")
 	public Response update(HomeLoan loan) {
 		try {
-		service.update(loan);
-		return Response.ok("Updated !").build();
-		}catch(RuntimeException ex) {
-			return Response.status(404,ex.getMessage()).build();
+			service.update(loan);
+			return Response.ok("Updated !").build();
+		} catch (RuntimeException ex) {
+			return Response.status(404, ex.getMessage()).build();
 		}
 	}
-	
+
 	@PATCH
-	public Response updateInterest(@QueryParam("accno")String accNo, @QueryParam("newrate")double rate) {
+	public Response updateInterest(@QueryParam("accno") String accNo, @QueryParam("newrate") double rate) {
 		try {
-		service.updateInterest(accNo, rate);
-		return Response.ok("Updated rate of interest").build();
-		}catch(RuntimeException ex) {
-			return Response.status(404,ex.getMessage()).build();
+			service.updateInterest(accNo, rate);
+			return Response.ok("Updated rate of interest").build();
+		} catch (RuntimeException ex) {
+			return Response.status(404, ex.getMessage()).build();
 		}
 	}
 }
