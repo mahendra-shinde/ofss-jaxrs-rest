@@ -12,6 +12,5 @@ public class MyConfig extends ResourceConfig{
 
 	public MyConfig() {
 		register(HomeLoanResource.class);
-		
 	}
 }

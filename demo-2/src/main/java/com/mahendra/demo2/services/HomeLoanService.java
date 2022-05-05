@@ -32,6 +32,11 @@ public class HomeLoanService {
 		throw new RuntimeException("Loan does not exists");
 	}
 	
+	public void delete(String loanAcc) {
+		HomeLoan loan = findByAccNum(loanAcc);
+		loans.remove(loan);
+	}
+	
 	private boolean loanExists(String accNum) {
 		for(HomeLoan loan : loans) {
 			if(loan.getAccountNumber().equalsIgnoreCase(accNum)) {
