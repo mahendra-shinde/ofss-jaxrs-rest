@@ -1,6 +1,5 @@
 package com.mahendra.demo1;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,8 +7,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
-@Path("/api/xyz")
+@Path("/api/customer")
 public class CustomerResource {
 	List<Customer> customers = new LinkedList<>();
 	
@@ -19,39 +20,54 @@ public class CustomerResource {
 	}
 	
 	/// GET http://localhost:4000/api/customers/
-	@GET
-	@Produces("text/html")
-	public String findAll() {
-		System.out.println("Invoking findAll method ");
-		StringBuilder br = new StringBuilder();
-		for(Customer cust: customers) {
-			br.append(cust.getCustId()).append(", ")
-			.append(cust.getLastName()).append(", ")
-			.append(cust.getFirstName()).append(", ")
-			.append(cust.getAddress()).append("<br/>");
-		}
-		return br.toString();
-	}
+	/*
+	 * @GET
+	 * 
+	 * @Produces("text/html") public String findAll() {
+	 * System.out.println("Invoking findAll method "); StringBuilder br = new
+	 * StringBuilder(); for(Customer cust: customers) {
+	 * br.append(cust.getCustId()).append(", ")
+	 * .append(cust.getLastName()).append(", ")
+	 * .append(cust.getFirstName()).append(", ")
+	 * .append(cust.getAddress()).append("<br/>"); } return br.toString(); }
+	 */
+	/*
+	 * @GET
+	 * 
+	 * @Produces({"application/json","application/xml"}) public Response
+	 * findAllJSON() { System.out.println("Invoking findAll method "); Customer[]
+	 * custs = customers.toArray(new Customer[customers.size()]); return
+	 * Response.ok(custs).header("Count", custs.length).build(); }
+	 */
 	
-	@GET
-	@Produces({"application/json","application/xml"})
-	public Customer[] findAllJSON() {
-		System.out.println("Invoking findAll method ");
-		return customers.toArray(new Customer[customers.size()]);
-	}
+//	@GET
+//	public Response findAllTypes(@QueryParam("type") String type) {
+//		System.out.println("Invoking findAll method ");
+//		Customer[] custs = customers.toArray(new Customer[customers.size()]);
+//		Response response= null;
+//		if(type.equalsIgnoreCase("json")) {
+//			response = Response.ok(custs,"Application/json").header("Count", custs.length).build();
+//		}
+//		else  {
+//			response = Response.ok(custs,"Application/xml").header("Count", custs.length).build();
+//		}
+//		return response;	
+//	}
+//	
+	
 	
 	
 	@GET
 	@Produces("text/html")
 	@Path("/{custid}") // Place-holder, Auto conversion from String to INT
-	public String findById(@PathParam("custid") int custId) {
+	public Response findById(@PathParam("custid") int custId) {
 		for(Customer customer : customers) {
 			if(customer.getCustId() == custId) {
 				String response = "Id: "+custId+", Name: "+customer.getFirstName()+" "+customer.getLastName()+", Address: "+customer.getAddress()+"<br/>";
-				return response;
+				return Response.ok(response).build();
 			}
 		}
-		return "<h3 style='color:red'>No record found</h3>";
+		return Response.status(404 ,"No record found").entity("No customer found for id "+custId).build();
 	}
 	
 	@GET
